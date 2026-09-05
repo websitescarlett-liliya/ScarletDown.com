@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScrletDown — MP4/MP3 Downloader</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark" data-bg="video">
+
+  <video id="bgVideo" autoplay muted loop playsinline>
+    <source src="https://files.catbox.moe/7v6clb.mp4" type="video/mp4">
+  </video>
+  <div id="bgOverlay"></div>
+
+  <header class="topbar">
+    <div class="logo">Snap<span>Down</span></div>
+    <button id="settingsBtn" class="icon-btn" aria-label="Pengaturan">
+      <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7.4-3.5c0 .4 0 .8-.1 1.2l2 1.6-2 3.4-2.4-.8c-.6.5-1.3.9-2 1.2l-.4 2.5H9.5l-.4-2.5c-.7-.3-1.4-.7-2-1.2l-2.4.8-2-3.4 2-1.6C4.6 12.8 4.6 12.4 4.6 12s0-.8.1-1.2l-2-1.6 2-3.4 2.4.8c.6-.5 1.3-.9 2-1.2L9.5 3h5l.4 2.5c.7.3 1.4.7 2 1.2l2.4-.8 2 3.4-2 1.6c.1.4.1.8.1 1.2Z"/></svg>
+    </button>
+  </header>
+
+  <main id="app">
+
+    <!-- HOME -->
+    <section id="page-home" class="page active">
+      <div class="card">
+        <h2>Download Video &amp; Audio TikTok</h2>
+        <p class="sub">Tempel link TikTok, pilih kualitas, lalu download.</p>
+
+        <input id="urlInput" type="text" placeholder="Tempel link TikTok di sini...">
+
+        <div class="row">
+          <div class="field">
+            <label>Kualitas Video</label>
+            <select id="qualitySelect">
+              <option value="720">720p</option>
+              <option value="1080" selected>1080p HD</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Frame Rate</label>
+            <select id="fpsSelect">
+              <option value="30">30 FPS</option>
+              <option value="60" selected>60 FPS HD</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button id="downloadMp4Btn" class="btn">Download MP4</button>
+          <button id="downloadMp3Btn" class="btn">Download MP3</button>
+        </div>
+
+        <div id="trialBanner" class="trial-banner"></div>
+        <div id="resultBox" class="result-box hidden"></div>
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section id="page-search" class="page">
+      <div class="card">
+        <h2>Cari Video TikTok</h2>
+        <div class="search-bar">
+          <input id="searchInput" type="text" placeholder="Cari kata kunci, misalnya: musik viral...">
+          <button id="searchBtn" class="btn small">Cari</button>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="page-profile" class="page">
+      <div class="card" id="profileCard"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="page-settings" class="page">
+      <div class="card">
+        <h2>Pengaturan</h2>
+
+        <div class="setting-row">
+          <span>Mode Tampilan</span>
+          <div class="toggle-pair">
+            <button class="btn small toggle-opt" data-theme-opt="light">Terang</button>
+            <button class="btn small toggle-opt" data-theme-opt="dark">Gelap</button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <span>Background</span>
+          <div class="toggle-pair">
+            <button class="btn small toggle-opt" data-bg-opt="video">Default</button>
+            <button class="btn small toggle-opt" data-bg-opt="white">Putih</button>
+            <button class="btn small toggle-opt" data-bg-opt="black">Hitam</button>
+          </div>
+        </div>
+
+        <button id="closeSettingsBtn" class="btn">Selesai</button>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="home">
+      <svg viewBox="0 0 24 24"><path d="M12 3 2 12h3v8h6v-6h2v6h6v-8h3L12 3Z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" data-page="search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5L20.5 19l-5-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="nav-btn" data-page="profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- AD MODAL -->
+  <div id="adModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="ad-tag" id="adTag">SPONSOR</div>
+      <h3 id="adTitle">Iklan</h3>
+      <p id="adBody"></p>
+      <div class="ad-timer">Lanjut dalam <span id="adCountdown">5</span> detik</div>
+      <button id="adContinueBtn" class="btn transparent" disabled>Lanjutkan</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
